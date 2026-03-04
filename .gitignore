@@ -1,0 +1,16 @@
+# Angular
+node_modules/
+dist/
+
+# Spring Boot
+target/
+
+# IDE
+.vscode/
+.settings/
+.classpath
+.project
+.factorypath
+
+# OS
+.DS_Store
