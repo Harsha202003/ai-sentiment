@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FeedbackService } from '../../core/services/feedback.service';
-import { Feedback } from '../../models/feedback.model';
+import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -12,17 +11,28 @@ import { CommonModule } from '@angular/common';
 })
 export class FeedbackListComponent implements OnInit {
 
-  feedbacks: Feedback[] = [];
+  feedbacks:any[] = [];
 
-  constructor(private feedbackService: FeedbackService) {}
+  constructor(private http:HttpClient){}
 
-  ngOnInit() {
-    this.loadFeedbacks();
+  ngOnInit(){
+    this.loadFeedback();
   }
 
-  loadFeedbacks() {
-    this.feedbackService.getAllFeedback().subscribe(data => {
-      this.feedbacks = data;
-    });
+  loadFeedback(){
+    this.http.get<any[]>('http://localhost:8080/api/feedback')
+      .subscribe(data => {
+        this.feedbacks = data;
+      });
   }
+
+  deleteFeedback(id:number){
+
+    this.http.delete(`http://localhost:8080/api/feedback/${id}`)
+      .subscribe(() => {
+        this.loadFeedback();
+      });
+
+  }
+
 }

@@ -1,31 +1,37 @@
 import { Component } from '@angular/core';
-import { FeedbackService } from '../../core/services/feedback.service';
-import { Feedback } from '../../models/feedback.model';
+import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-feedback-form',
   standalone: true,
-  imports: [FormsModule,CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './feedback-form.component.html',
   styleUrls: ['./feedback-form.component.css']
 })
 export class FeedbackFormComponent {
 
-  feedbackText: string = '';
-  message: string = '';
+  feedbackText = '';
+  message = '';
 
-  constructor(private feedbackService: FeedbackService) {}
+  constructor(private http: HttpClient) {}
 
   submit() {
-    const feedback: Feedback = {
+
+    const payload = {
       text: this.feedbackText
     };
 
-    this.feedbackService.submitFeedback(feedback).subscribe(response => {
-      this.message = `Sentiment: ${response.sentiment}`;
-      this.feedbackText = '';
-    });
+    this.http.post<any>('http://localhost:8080/api/feedback/analyze', payload)
+      .subscribe(res => {
+
+        this.message = "Sentiment: " + res.sentiment;
+
+        this.feedbackText = '';
+
+      });
+
   }
+
 }

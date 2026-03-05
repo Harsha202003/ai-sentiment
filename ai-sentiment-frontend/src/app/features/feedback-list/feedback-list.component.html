@@ -1,8 +1,16 @@
 <div class="list-container">
-  <h2>Feedback History</h2>
 
-  <div *ngFor="let fb of feedbacks" class="card">
-    <p><strong>Text:</strong> {{ fb.text }}</p>
-    <p><strong>Sentiment:</strong> {{ fb.sentiment }}</p>
-  </div>
+<h2>Feedback History</h2>
+
+<div *ngFor="let fb of feedbacks" class="card">
+
+<p><strong>Text:</strong> {{fb.text}}</p>
+<p><strong>Sentiment:</strong> {{fb.sentiment}}</p>
+
+<button class="delete-btn" (click)="deleteFeedback(fb.id)">
+Delete
+</button>
+
+</div>
+
 </div>

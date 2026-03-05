@@ -1,0 +1,35 @@
+<div class="stats">
+
+  <div class="stat-card">
+    <h3>Total</h3>
+    <p>{{total}}</p>
+  </div>
+
+  <div class="stat-card positive">
+    <h3>Positive</h3>
+    <p>{{positive}}</p>
+  </div>
+
+  <div class="stat-card negative">
+    <h3>Negative</h3>
+    <p>{{negative}}</p>
+  </div>
+
+  <div class="stat-card neutral">
+    <h3>Neutral</h3>
+    <p>{{neutral}}</p>
+  </div>
+
+</div>
+
+<div class="chart-container">
+
+  <h2>Sentiment Analytics</h2>
+
+  <canvas
+    baseChart
+    [data]="chartData"
+    [type]="'pie'">
+  </canvas>
+
+</div>
