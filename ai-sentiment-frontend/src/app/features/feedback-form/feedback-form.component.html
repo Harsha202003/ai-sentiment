@@ -5,7 +5,15 @@
             placeholder="Enter your feedback..."
             rows="4"></textarea>
 
-  <button (click)="submit()">Analyze</button>
+  <select [(ngModel)]="sentiment">
+    <option value="">Select Sentiment</option>
+    <option value="Positive">Positive</option>
+    <option value="Neutral">Neutral</option>
+    <option value="Negative">Negative</option>
+  </select>
 
-  <p *ngIf="message" class="result">{{ message }}</p>
+  <button (click)="submit()">Submit</button>
+
+  <p *ngIf="message">Sentiment: {{ message }}</p>
+
 </div>

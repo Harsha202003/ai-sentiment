@@ -12,24 +12,37 @@ import { CommonModule } from '@angular/common';
 })
 export class FeedbackFormComponent {
 
-  feedbackText = '';
-  message = '';
+  feedbackText: string = '';
+  sentiment: string = '';
+  message: string = '';
 
   constructor(private http: HttpClient) {}
 
   submit() {
 
+    if(!this.feedbackText || !this.sentiment){
+      this.message = "Please enter feedback and select sentiment";
+      return;
+    }
+
     const payload = {
-      text: this.feedbackText
+      text: this.feedbackText,
+      sentiment: this.sentiment
     };
 
-    this.http.post<any>('http://localhost:8080/api/feedback/analyze', payload)
-      .subscribe(res => {
+    this.http.post<any>('http://localhost:8080/api/feedback', payload)
+      .subscribe({
+        next: (res) => {
+          this.message = res.sentiment;
 
-        this.message = "Sentiment: " + res.sentiment;
-
-        this.feedbackText = '';
-
+          // clear form
+          this.feedbackText = '';
+          this.sentiment = '';
+        },
+        error: (err) => {
+          console.error(err);
+          this.message = "Error saving feedback";
+        }
       });
 
   }
